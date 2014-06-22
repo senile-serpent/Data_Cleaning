@@ -88,3 +88,5 @@ As an aside
 Have you recently tried to upload multiple megabit files across an 18kb/s link.
 
 Makes watching paint dry a positively breathtaking experience!
+
+Git upload has again failed!!
