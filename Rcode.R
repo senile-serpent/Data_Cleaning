@@ -286,8 +286,6 @@ subjsetmean <- data.frame()
   
   
 
-
-
 subjsetmean <- replace( subjsetmean, is.na(subjsetmean), 0)
 
 # Add column names
@@ -309,21 +307,7 @@ testsubjout <- testsubj[ , c(80, 1:79)]
 write.csv(testsubjout, file = "mean_values_of_all_subjects.csv")
 
 
-
 ###################################################################################
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 mysubjectdf <- mydatafr[order(mydatafr[82], mydatafr[80], mydatafr[81]) , ]
@@ -375,15 +359,34 @@ trainsubjout <- trainsubj[ , c(80, 1:79)]
 write.csv(trainsubjout, file = "mean_values_of_training_subjects.csv")
 
 
-
-
-
-
 ########################################################
-##### Mean values 
 
 
+##############  Tidy data #############
 
+# Col 80 => SubjectID
+# Col 81 => ActivityID
+
+badframe <-mydatafr[ , 1:81]  # Use the output from Q3 to demonstrate my inability to use the melt function
+
+badframe <- na.omit(badframe) #  Get rid of the NA values
+
+moltenframe <- melt(badframe, id = c(80, 81))
+
+moltenframe <- na.omit(moltenframe) #  Get rid of the NA values
+
+moltenframe <- moltenframe[order(moltenframe[2], moltenframe[1]) , ]
+
+
+subjectmeans <- cast(moltenframe, moltenframe[1], mean) # Brilliant R functon that could in theory work very well.
+activitymeans <- cast(moltenframe, moltenframe[2], mean)# Brilliant R functon that could in theory work very well.
+
+#The only output, after many many attempts : 
+#> activitymeans <- cast(moltenframe, "ActivityID", mean)
+# Error in vars[[2]] : subscript out of bounds
+
+
+write.csv(moltenframe, file = "my_tidy_data.csv")
 
 
 
